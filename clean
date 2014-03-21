@@ -1,4 +1,4 @@
 #!/bin/sh
 
-rm -f -r target/classes
+rm -r -f target/classes
 
