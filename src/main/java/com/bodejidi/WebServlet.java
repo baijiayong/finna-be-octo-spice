@@ -26,20 +26,45 @@ public class WebServlet extends HttpServlet
       conn = DriverManager.getConnection("jdbc:mysql://localhost/test?"
                                             + "user=root"
                                             + "&password=");
+       
       stmt = conn.createStatement();
-      String sql = "SELECT * FROM member";
-      System.out.println("SQL: " + sql);
-      rs = stmt.executeQuery(sql);
-      resp.getWriter().println("<html><head><title>Member List</title></head><body><h1>Member List<h1><table border=\"1\"><tr><td>ID</td><td>Name</td></tr>\n");
-      while(rs.next()) {
-                Long id = rs.getLong("id");
-                String firstName = rs.getString("first_name");
-                String lastName = rs.getString("last_name");
-                resp.getWriter().println("<tr><td>" + id + "</td><td>" + firstName + " " + lastName + "</td></tr>\n");
-            }
-      resp.getWriter().println("</table>");
-      resp.getWriter().println("<p><a href=\".\">Add member</a></p>");
-      resp.getWriter().println("</body></html>");
+      String pid = req.getParameter("id");
+      
+      if (null == pid)
+      {
+        String sql = "SELECT * FROM member";
+        System.out.println("SQL: " + sql);
+        rs = stmt.executeQuery(sql);
+        resp.getWriter().println("<html><head><title>Member List</title></head><body><h1>Member List<h1><table border=\"1\"><tr><td>ID</td><td>Name</td></tr>\n");
+        while(rs.next()) {
+                  Long id = rs.getLong("id");
+                  String firstName = rs.getString("first_name");
+                  String lastName = rs.getString("last_name");
+                  resp.getWriter().println("<tr><td><a href=\"\">" + id + "</td><td>" + firstName + " " + lastName + "</td></tr>\n");
+              }
+        resp.getWriter().println("</table>");
+        resp.getWriter().println("<p><a href=\".\">Add member</a></p>");
+        resp.getWriter().println("</body></html>");
+      }
+      else 
+      {
+        String sql = "SELECT * FROM member";
+        sql = sql + " WHERE id = " + pid;
+        System.out.println("SQL: " + sql);
+        rs = stmt.executeQuery(sql);
+        resp.getWriter().println("<html><head><title>Member List</title></head><body><hi>Member</h1><table border=\"1\">\n");
+        while(rs.next())
+        {
+          long id  = rs.getLong("id");
+          String firstName = rs.getString("first_name");
+          String lastName = rs.getString("last_name");
+          resp.getWriter().println("<tr><td>ID</td><td>" + id + "</td></tr><tr><td>firstName: </td><td>" + firstName + "</td><tr><td>lastName: </td><td>" + lastName + "</tr></td>");  
+        }
+        resp.getWriter().println("</table>");
+        resp.getWriter().println("<p><a href= \".\">Add Member</a></p>");
+        resp.getWriter().println("</body>");
+        resp.getWriter().println("</html>");
+      }
     }
     catch(SQLException ex)
     {
@@ -72,6 +97,18 @@ public class WebServlet extends HttpServlet
           //ignore;
         }
       }
+        if (rs != null)
+        {
+          try
+          {
+            rs.close();
+          }
+          catch(SQLException sqlEx)
+          {
+          //ignore;
+          }
+        }
+      
     }
   }
   public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,java.io.IOException
