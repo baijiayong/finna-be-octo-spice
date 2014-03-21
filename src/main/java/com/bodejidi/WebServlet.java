@@ -40,7 +40,7 @@ public class WebServlet extends HttpServlet
                   Long id = rs.getLong("id");
                   String firstName = rs.getString("first_name");
                   String lastName = rs.getString("last_name");
-                  resp.getWriter().println("<tr><td><a href=\"\">" + id + "</td><td>" + firstName + " " + lastName + "</td></tr>\n");
+                  resp.getWriter().println("<tr><td><a href=\"?id=" + id + "\">" + id + "</td><td>" + firstName + " " + lastName + "</td></tr>\n");
               }
         resp.getWriter().println("</table>");
         resp.getWriter().println("<p><a href=\".\">Add member</a></p>");
@@ -52,7 +52,7 @@ public class WebServlet extends HttpServlet
         sql = sql + " WHERE id = " + pid;
         System.out.println("SQL: " + sql);
         rs = stmt.executeQuery(sql);
-        resp.getWriter().println("<html><head><title>Member List</title></head><body><hi>Member</h1><table border=\"1\">\n");
+        resp.getWriter().println("<html><head><title>Member List</title></head><body><h1>Member</h1><table border=\"1\">\n");
         while(rs.next())
         {
           long id  = rs.getLong("id");
