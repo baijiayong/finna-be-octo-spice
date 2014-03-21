@@ -5,3 +5,9 @@ mkdir $CATALINA_HOME/webapps/webservlet/
 cp -r src/main/webapp/* /d/apache-tomcat-7.0.50/webapps/webservlet/
 
 cp -r target/classes /d/apache-tomcat-7.0.50/webapps/webservlet/WEB-INF/
+
+mkdir $CATALINA_HOME/webapps/hellojdbc/WEB-INF/lib/
+
+cp -r lib $CATALINA_HOME/webapps/webservlet/WEB-INF/lib/
+
+
